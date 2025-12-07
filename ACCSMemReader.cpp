@@ -24,44 +24,38 @@ ACCSMEMREADER_API int InitSM()
 	TCHAR szStatic[] = TEXT("Local\\acpmf_static");
 
 	//INIT PHYSICS SHARED MEMORY
-	m_physics.hMapFile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(struct SPageFilePhysics), szPhysics);
+	m_physics.hMapFile = OpenFileMapping(FILE_MAP_READ, FALSE,szPhysics);
 	if (!m_physics.hMapFile)
 	{
-		MessageBoxA(GetActiveWindow(), "CreateFileMapping failed", "ACCS", MB_OK);
 		return -1;
 	}
 	m_physics.mapFileBuffer = (unsigned char*)MapViewOfFile(m_physics.hMapFile, FILE_MAP_READ, 0, 0, sizeof(SPageFilePhysics));
 	if (!m_physics.mapFileBuffer)
 	{
-		MessageBoxA(GetActiveWindow(), "MapViewOfFile failed", "ACCS", MB_OK);
 		return -1;
 	}
 
 	//INIT GRAPHIC SHARED MEMORY
-	m_graphic.hMapFile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(struct SPageFileGraphic), szGraphics);
+	m_graphic.hMapFile = OpenFileMapping(FILE_MAP_READ, FALSE, szGraphics);
 	if (!m_graphic.hMapFile)
 	{
-		MessageBoxA(GetActiveWindow(), "CreateFileMapping failed", "ACCS", MB_OK);
 		return -1;
 	}
 	m_graphic.mapFileBuffer = (unsigned char*)MapViewOfFile(m_graphic.hMapFile, FILE_MAP_READ, 0, 0, sizeof(SPageFileGraphic));
 	if (!m_graphic.mapFileBuffer)
 	{
-		MessageBoxA(GetActiveWindow(), "MapViewOfFile failed", "ACCS", MB_OK);
 		return -1;
 	}
 
 	//INIT STATIC SHARED MEMORY
-	m_static.hMapFile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(struct SPageFileStatic), szStatic);
+	m_static.hMapFile = OpenFileMapping(FILE_MAP_READ, FALSE, szStatic);
 	if (!m_static.hMapFile)
 	{
-		MessageBoxA(GetActiveWindow(), "CreateFileMapping failed", "ACCS", MB_OK);
 		return -1;
 	}
 	m_static.mapFileBuffer = (unsigned char*)MapViewOfFile(m_static.hMapFile, FILE_MAP_READ, 0, 0, sizeof(SPageFileStatic));
 	if (!m_static.mapFileBuffer)
 	{
-		MessageBoxA(GetActiveWindow(), "MapViewOfFile failed", "ACCS", MB_OK);
 		return -1;
 	}
 

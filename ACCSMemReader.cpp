@@ -5,6 +5,8 @@
 #include "framework.h"
 #include "ACCSMemReader.h"
 
+#define MAX_ATTEMPTS 20
+
 struct SMElement
 {
 	HANDLE hMapFile;
@@ -91,7 +93,7 @@ ACCSMEMREADER_API void ReadPhysics(SPageFilePhysics* outData)
 	SPageFilePhysics* source = (SPageFilePhysics*)m_physics.mapFileBuffer;
 
 	int retries = 0;
-	while (retries < 10)
+	while (retries < MAX_ATTEMPTS)
 	{
 		int startId = source->packetId;
 
@@ -113,7 +115,7 @@ ACCSMEMREADER_API void ReadGraphics(SPageFileGraphic* outData)
 	SPageFileGraphic* source = (SPageFileGraphic*)m_graphic.mapFileBuffer;
 
 	int retries = 0;
-	while (retries < 10)
+	while (retries < MAX_ATTEMPTS)
 	{
 		int startId = source->packetId;
 		memcpy(outData, source, sizeof(SPageFileGraphic));
